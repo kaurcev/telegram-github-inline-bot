@@ -9,6 +9,10 @@ export enum ErrorType {
 
 export class ErrorHandlerService {
   handle(error: unknown): string {
+    if (error instanceof Error && error.message.startsWith('RATE_LIMIT:')) {
+      return error.message.replace('RATE_LIMIT: ', '');
+    }
+
     if (this.isAxiosError(error)) {
       return this.handleAxiosError(error);
     }
@@ -30,15 +34,15 @@ export class ErrorHandlerService {
     }
 
     if (error.response?.status === ErrorType.RATE_LIMIT) {
-      return 'GitHub rate limit exceeded';
+      return 'GitHub API rate limit exceeded. Please try again later.';
     }
 
     if (error.response?.status === ErrorType.NOT_FOUND) {
-      return 'Not found';
+      return 'Repository not found';
     }
 
     if (error.response?.status === ErrorType.VALIDATION_FAILED) {
-      return 'Invalid GitHub request';
+      return 'Invalid search query';
     }
 
     return 'GitHub search error';

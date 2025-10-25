@@ -21,4 +21,8 @@ export class EnvironmentConfig {
     }
     return token;
   }
+
+  getGitHubToken(): string | undefined {
+    return process.env.GITHUB_TOKEN;
+  }
 }

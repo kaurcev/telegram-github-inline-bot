@@ -1,3 +1,4 @@
+// src/bot/telegram.bot.ts
 import { Telegraf, Context } from 'telegraf';
 import { Update } from 'telegraf/typings/core/types/typegram';
 import { IGitHubService } from '../services/github.service';
@@ -7,6 +8,7 @@ import { ErrorHandlerService } from '../services/error-handler.service';
 import { CustomInlineQueryResult } from '../types/telegram';
 import { StartCommand } from './commands/start.command';
 import { TestCommand } from './commands/test.command';
+import { StatusCommand } from './commands/status.command';
 
 interface IBotCommand {
   register(): void;
@@ -46,6 +48,7 @@ export class TelegramBot {
     const commands: IBotCommand[] = [
       new StartCommand(this.bot),
       new TestCommand(this.bot),
+      new StatusCommand(this.bot, this.githubService),
     ];
 
     commands.forEach(command => command.register());
@@ -55,7 +58,6 @@ export class TelegramBot {
     if (!ctx.inlineQuery) return;
 
     const query = ctx.inlineQuery.query;
-    console.log(`Inline query: ${query}`);
 
     const parseResult = this.queryParser.parse(query);
 
@@ -85,8 +87,6 @@ export class TelegramBot {
         const username = query.trim();
         repositories = await this.githubService.getUserRepositories(username);
       }
-
-      console.log(`Found: ${repositories.length} repositories`);
 
       if (repositories.length === 0) {
         await ctx.answerInlineQuery([], {

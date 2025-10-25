@@ -5,20 +5,32 @@ import { ResponseBuilderService } from './services/response-builder.service';
 import { ErrorHandlerService } from './services/error-handler.service';
 import { TelegramBot } from './bot/telegram.bot';
 import { ConsoleLogger } from './logger/console.logger';
+import { WebServer } from './web-server';
 
 export class Application {
   private logger: ConsoleLogger;
+  private webServer: WebServer;
 
   constructor() {
     this.logger = new ConsoleLogger();
+    this.webServer = new WebServer(process.env.PORT ? parseInt(process.env.PORT) : 8080);
   }
 
   async bootstrap(): Promise<void> {
     try {
       const config = EnvironmentConfig.getInstance();
       const token = config.getBotToken();
+      const githubToken = config.getGitHubToken();
+      
+      this.logger.info('Application starting...');
 
-      this.logger.info('Bot starting...');
+      if (!githubToken) {
+        this.logger.warn('GITHUB_TOKEN not provided. Using unauthenticated requests with lower rate limits.');
+      } else {
+        this.logger.info('GitHub token provided. Using authenticated requests.');
+      }
+
+      this.webServer.start();
 
       const githubService = new GitHubService();
       const queryParser = new QueryParserService();
@@ -39,6 +51,7 @@ export class Application {
       await bot.launch();
 
       this.logger.info('Bot started successfully');
+      this.logger.info('Application is fully operational');
 
     } catch (error) {
       this.logger.error('Application startup error:', error);
@@ -48,13 +61,13 @@ export class Application {
 
   private setupGracefulShutdown(bot: TelegramBot): void {
     process.once('SIGINT', () => {
-      this.logger.info('SIGINT received. Stopping bot...');
+      this.logger.info('SIGINT received. Stopping application...');
       bot.stop('SIGINT');
       process.exit(0);
     });
 
     process.once('SIGTERM', () => {
-      this.logger.info('SIGTERM received. Stopping bot...');
+      this.logger.info('SIGTERM received. Stopping application...');
       bot.stop('SIGTERM');
       process.exit(0);
     });

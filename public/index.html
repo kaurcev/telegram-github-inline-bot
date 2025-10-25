@@ -1,0 +1,273 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Search Telegram Bot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background-color: #f6f8fa;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 3rem 0;
+            border-bottom: 1px solid #e1e4e8;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #24292e;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #586069;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #24292e;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+        }
+
+        .feature h3 {
+            color: #24292e;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .feature p {
+            color: #586069;
+            font-size: 0.9rem;
+        }
+
+        .usage-examples {
+            background: #f6f8fa;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border: 1px solid #e1e4e8;
+        }
+
+        .usage-examples h3 {
+            color: #24292e;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .code {
+            background: #1b1f23;
+            color: #f6f8fa;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'SFMono-Regular', 'Consolas', 'Liberation Mono', 'Menlo', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            border: 1px solid #444d56;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2ea44f;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+            border: 1px solid rgba(27, 31, 35, 0.15);
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #2c974b;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-large {
+            font-size: 1rem;
+            padding: 12px 30px;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e1e4e8;
+            color: #586069;
+            font-size: 0.9rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .tech-tag {
+            background: #f6f8fa;
+            color: #24292e;
+            padding: 0.4rem 0.8rem;
+            border-radius: 2em;
+            font-size: 0.8rem;
+            border: 1px solid #e1e4e8;
+            font-weight: 500;
+        }
+
+        ul {
+            list-style-position: inside;
+            margin-left: 1rem;
+            color: #586069;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #586069;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>GitHub Search Bot</h1>
+            <p>Search GitHub repositories directly from Telegram</p>
+        </div>
+
+        <div class="card">
+            <h2>About This Bot</h2>
+            <p>A professional Telegram inline bot built with TypeScript that allows you to search GitHub repositories without leaving your chat.</p>
+            
+            <div class="feature-grid">
+                <div class="feature">
+                    <h3>Fast Search</h3>
+                    <p>Instant repository search with intelligent caching</p>
+                </div>
+                <div class="feature">
+                    <h3>Smart Results</h3>
+                    <p>Find users and specific repositories with ease</p>
+                </div>
+                <div class="feature">
+                    <h3>Optimized</h3>
+                    <p>Built for high-volume usage with rate limit management</p>
+                </div>
+            </div>
+
+            <div class="center" style="margin-top: 2rem;">
+                <a href="https://t.me/githubcom_bot" class="btn btn-large" target="_blank">
+                    Start Using Bot
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>How to Use</h2>
+            
+            <div class="usage-examples">
+                <h3>Search User Repositories</h3>
+                <div class="code">@githubcom_bot microsoft</div>
+                <p>Shows all repositories from Microsoft</p>
+            </div>
+
+            <div class="usage-examples">
+                <h3>Search Specific Repository</h3>
+                <div class="code">@githubcom_bot microsoft/vscode</div>
+                <p>Shows the specific Visual Studio Code repository</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Technical Features</h2>
+            <ul>
+                <li>TypeScript for type safety</li>
+                <li>SOLID principles architecture</li>
+                <li>Intelligent caching system</li>
+                <li>Rate limit monitoring and management</li>
+                <li>Professional error handling</li>
+                <li>High-performance design</li>
+            </ul>
+
+            <div class="tech-stack">
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Telegraf</span>
+                <span class="tech-tag">GitHub API</span>
+                <span class="tech-tag">Axios</span>
+                <span class="tech-tag">SOLID</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Source Code</h2>
+            <p>This bot is open source and available on GitHub. Feel free to contribute or deploy your own instance.</p>
+            
+            <div class="center" style="margin-top: 1.5rem;">
+                <a href="https://github.com/kaurcev/telegram-github-inline-bot" class="btn" target="_blank">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Created by <a href="//github.com/kaurcev" target="_blank">Alexsandr Kaurcev</a></p>
+            <p>Licensed under MIT License</p>
+        </div>
+    </div>
+</body>
+</html>
