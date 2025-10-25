@@ -7,7 +7,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "pub": "npm run build && npm run start"
   },
   "author": "Alexsandr Kaurcev",
   "repository": {
