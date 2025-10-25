@@ -12,10 +12,12 @@ A professional Telegram inline bot for searching GitHub repositories. Built with
 - **High Performance**: Caching and optimized API calls
 - **Type Safety**: Built with TypeScript
 - **Production Ready**: Graceful shutdown and error handling
+- **Built-in Web Server**: Landing page served automatically
 
 ## Architecture
 
 The bot follows SOLID principles with a clean architecture:
+
 ```
 src/
 ├── bot/ # Telegram bot handlers and commands
@@ -23,6 +25,7 @@ src/
 ├── types/ # TypeScript type definitions
 ├── config/ # Configuration management
 ├── logger/ # Logging utilities
+├── web-server.ts # Express web server for landing page
 └── app.ts # Application bootstrap
 ```
 
@@ -43,8 +46,26 @@ cp .env.example .env
 ```
 4. Configure your bot token in ```.env```:
 ```
-BOT_TOKEN=your_telegram_bot_token_here
+PORT=8080
+BOT_TOKEN=tgbot_token
+GITHUB_TOKEN=github_token
 ```
+
+### GitHub Token Setup
+For optimal performance, create a GitHub Personal Access Token:
+
+1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
+
+2. Create a new token with these scopes:
+
+- public_repo (required for searching public repositories)  
+- read:user (optional, for u  ser information)
+
+3. Copy the token and add it to your .env file as GITHUB_TOKEN
+
+**Without GitHub Token**: 60 requests/hour  
+**With GitHub Token**: 5000 requests/hour
+
 
 ## Usage
 
@@ -58,6 +79,14 @@ npm run dev
 npm run build
 npm start
 ```
+
+## Access Points
+- Telegram Bot: Search via inline mode in any chat
+- Landing Page: http://localhost:8080 (or your configured PORT)
+- Health Check: http://localhost:8080/health
+
+
+
 ## Inline Usage
 
 In any Telegram chat, type:
@@ -69,13 +98,17 @@ In any Telegram chat, type:
 
 - ```/start``` - Get bot usage instructions 
 - ```/test``` - Test if bot is working
+- ```/status``` - Check GitHub API rate limit status
 
 ## API Features
 
-**GitHub API Integration**: Direct repository lookup and search fallback    
-**Intelligent Caching**: 5-minute cache for API responses   
-**Error Handling**: Comprehensive error management with user-friendly messages  
-**HTML Escaping**: Safe HTML rendering for repository descriptions
+- **GitHub API Integration**: Direct repository lookup and search fallback
+- **Intelligent Caching**: 5-minute cache for API responses
+- **Rate Limit Management**: Automatic monitoring and graceful degradation
+- **Error Handling**: Comprehensive error management with user-friendly messages
+- **HTML Escaping**: Safe HTML rendering for repository descriptions
+- **Web Server**: Built-in Express server for landing page
+
 
 ## Prodaction
 
@@ -94,18 +127,25 @@ npm run clean
 
 The bot uses the following environment variables:
 - ```BOT_TOKEN``` - Telegram Bot Token (required)
+- ```GITHUB_TOKEN``` - GitHub Personal Access Token (recommended)
+- ```PORT``` - Web server port (optional, default: 8080)
 
 ## Performance
-- **Caching**: In-memory cache with 5-minute TTL  
-- **Optimized Logging**: Minimal logging for production   
-- **Error Resilience**: Graceful degradation on API failures  
+- **Caching**: In-memory cache with 5-minute TTL
+- **Rate Limit Optimization**: 5000 requests/hour with GitHub token
+- **Concurrent Operation**: Bot and web server run in same process
+- **Optimized Logging**: Minimal logging for production
+- **Error Resilience**: Graceful degradation on API failures
 - **Memory Efficient**: No memory leaks with proper cleanup
+
 ## Error Handling
 The bot handles various error scenarios:
-- GitHub API rate limiting    
-- Network timeouts    
-- Invalid user/repository names   
-- Malformed HTML in descriptions  
+- GitHub API rate limiting with reset time estimation
+- Network timeouts
+- Invalid user/repository names
+- Malformed HTML in descriptions
+- Web server port conflicts
+
 ## Contributing
 1. Fork the repository
 2. Create a feature branch
